@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type Go</title>
+    <link rel="stylesheet" type="text/css" href="../css/template.css">
+    <link rel="stylesheet" type="text/css" href="../css/multi.css">
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js" integrity="sha512-2RDFHqfLZW8IhPRvQYmK9bTLfj/hddxGXQAred2wNZGkrKQkLGj8RCkXfRJPHlDerdHHIzTFaahq4s/P4V6Qig==" crossorigin="anonymous"></script>
+    <script defer src="../js/multi.js"></script>
+</head>
+
+<body>
+    <%- include('./template/nav.ejs'); -%>
+      <div class="container">
+        <div class="gameDiv shadow">
+          <label for=""><b >Code:</b></label>
+          <h4 style="display: inline-block;">f4fn754yc7y485y8</h4>
+          <div class="game shadow"></div>
+        </div>
+        <div class="typeDiv center shadow">
+            <p class="words shadow" id = "pera" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime sequi minima ipsam, similique veniam explicabo impedit quam nemo consequatur nobis atque. Expedita eius architecto quae iusto ipsum quo. Neque, eligendi?</p>
+            <h1 class="center" id="timer">2:00</h1>
+            <input type="text" name="" id="myText">
+            <small>Starting in 10</small>
+            <div class="btnDiv">
+                <button>Start</button>
+                <button>Home</button>
+            </div>
+        </div>
+      </div>
+      <%- include('./template/footer.ejs'); -%>
+    
+
+</body>
+
+</html>
