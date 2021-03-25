@@ -1,5 +1,6 @@
 *{
     /* border:1px solid black !important; */
+    box-sizing: border-box;
 }
 .container{
     display: flex;
@@ -31,6 +32,7 @@
 .words {
     padding: 38px;
     margin-top: 21px;
+    font-size: larger;
 }
 
 .center{
@@ -38,6 +40,7 @@
 }
 
 button {
+    font-size: large;
     width: 108px;
     height: 35px;
     border-radius: 6px;
@@ -47,12 +50,6 @@ button {
     margin-top: 30px;
 }
 
-input[type="text"] {
-    width: 100%;
-    margin-top: 30px;
-    height: 41px;
-    border-radius: 6px;
-}
 
 .shadow{
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -62,4 +59,24 @@ input[type="text"] {
 
 #timer{
     margin-top: 30px;
+}
+
+.correct{
+    color:#00d000;
+}
+
+.incorrect{
+    color: red;
+    text-decoration: underline;
+}
+
+#myText{
+    width: 100%;
+    margin-top: 30px;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: x-large;
+    resize: none; 
+    height: 180px;
+
 }
