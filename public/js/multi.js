@@ -148,8 +148,3 @@ myText.addEventListener('input', () => {
         // console.log('you typed correct');
     }
 })
-
-
-function timeTaken(){
-
-}

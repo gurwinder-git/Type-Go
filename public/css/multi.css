@@ -1,7 +1,18 @@
 *{
     /* border:1px solid black !important; */
     box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
 }
+
+/* body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+} */
+
 .container{
     display: flex;
     width: 100%;
@@ -40,11 +51,26 @@
 }
 
 button {
+    font-weight: 600;
     font-size: large;
     width: 108px;
     height: 35px;
     border-radius: 6px;
+    border: none;
+    background-color: #484848;
+    color: wheat;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+button:hover{
+    background-color: #2b2b2b;
+    cursor: pointer;
+}
+button:disabled{
+    background-color: #cccccc;
+    color: #989898;
+    cursor: not-allowed;
+} 
 
 .btnDiv {
     margin-top: 30px;
@@ -53,6 +79,8 @@ button {
 
 .shadow{
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    border-radius: 20px;
+    background-color: whitesmoke;
 
 }
 
@@ -89,12 +117,23 @@ button {
     color: green;
 }
 
+/* ranking div */
+.rankDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    
+} 
+
 
 /* table css */
 #players {
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
     border-collapse: collapse;
-    width: 50%;
+    width: 70%;
+    margin: 30px 0px;
   }
   
   #players td, #players th {
@@ -111,5 +150,5 @@ button {
     padding-bottom: 12px;
     text-align: left;
     background-color: #484848;
-    color: white;
+    color: wheat;
   }
