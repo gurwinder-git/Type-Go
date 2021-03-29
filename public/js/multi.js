@@ -69,7 +69,7 @@ function getRandomQuote() {
 async function getNextQuote() {
     const quote = await getRandomQuote();
     totalWords = quote.split(' ').length;
-    console.log('total words=',totalWords);
+    // console.log('total words=',totalWords);
     // console.log(quote);
     // pera.innerText = '';
     quote.split('').forEach(i => {
@@ -86,15 +86,19 @@ async function getNextQuote() {
 
 //calculating WPM
 function wpmFunc(){
-    console.log('wpm called');
-    // var wpm = totalWords/timeTaken;
+    var diff = endinputTime - startInputTime;
+    var timeTakenToInputInMinutes = diff/60000;
+    var wpm = Math.round(totalWords/timeTakenToInputInMinutes);
+    console.log('wpm:', wpm);
+    startInputTime = null;
+    endinputTime = null;
 }
 
 // adding event listener on textarea when stating input
 
 myText.addEventListener('input', () => {
     if(startInputTime == null){
-        startInputTime = new Date();
+        startInputTime = new Date().getTime();
         console.log('start time',startInputTime);
     }
 
@@ -131,7 +135,7 @@ myText.addEventListener('input', () => {
         }
     }
     if(isCorrect){
-        endinputTime = new Date();
+        endinputTime = new Date().getTime();
         console.log('end time',endinputTime);
         wpmFunc()
         timeLeft = 6;
