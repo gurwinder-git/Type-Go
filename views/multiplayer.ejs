@@ -28,8 +28,8 @@
 
             <h1 class="center" id="timer">2:00</h1>
 
-            <textarea name="" id="myText" cols="30" rows="10" disabled></textarea>
-            <small id = "textInSmallTag" class = "green"> </small><small id="timeLeftSpan" class = "green"></small> 
+            <textarea name="" id="myText" cols="30" rows="10" placeholder = "Type the above text here" disabled></textarea>
+            <small style="font-weight: bolder;" id = "textInSmallTag" class = "green"> </small><small id="timeLeftSpan" class = "green" style="font-weight: bolder;" ></small> 
 
             <div class="btnDiv">
                 <button id = "startBtn">Start</button>
@@ -37,9 +37,22 @@
             </div>
         </div>
       </div>
+
+    <div class="rankDiv">
+      <table id="players" >
+        <h2>Ranks</h2>
+        <tr>
+          <th>Players</th>
+          <th>Speed</th>
+          <th>Accuracy</th>
+        </tr>
+        <tr>
+          <td>Alfreds </td>
+          <td>20 wpm</td>
+          <td>90%</td>
+        </tr>
+      </table>
+    </div>
       <%- include('./template/footer.ejs'); -%>
-    
-
 </body>
-
 </html>

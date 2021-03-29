@@ -43,9 +43,12 @@ nav{
     justify-content: center;
     align-items: center;
     height: 60px;
-    position: absolute;
+    position: inherit;
     bottom: 0px;
     width: 100%;
+    border-top: 1px grey solid;
+
+    
 }
 .footer p{
     color: rgb(0, 0, 0);
