@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type Go</title>
+    <link rel="stylesheet" type="text/css" href="../css/template.css">
+    <link rel="stylesheet" type="text/css" href="../css/multi.css">
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js" integrity="sha512-2RDFHqfLZW8IhPRvQYmK9bTLfj/hddxGXQAred2wNZGkrKQkLGj8RCkXfRJPHlDerdHHIzTFaahq4s/P4V6Qig==" crossorigin="anonymous"></script>
+    <script defer src="../js/create.js"></script>
+</head>
+
+<body>
+    <%- include('./template/nav.ejs'); -%>
+      <div class="container">
+        
+        <div class="gameDiv shadow">
+          <label for=""><b >Code:</b></label>
+          <h4 style="display: inline-block;">f4fn754yc7y485y8</h4>
+          <div class="game shadow"></div>
+        </div>
+
+        <div class="typeDiv center shadow">
+          <div id="hack" style="display: none;">
+             <p class="words shadow" id = "pera" ></p>
+          </div>  
+
+            <h1 class="center" id="timer">2:00</h1>
+
+            <textarea name="" id="myText" cols="30" rows="10" placeholder = "Click on start button to start typing..." disabled></textarea>
+            <small style="font-weight: bolder;" id = "textInSmallTag" class = "green"> </small><small id="timeLeftSpan" class = "green" style="font-weight: bolder;" ></small> 
+
+            <div class="btnDiv">
+                <button id = "startBtn">Start</button>
+                <button id = "homeBtn">Home</button>
+            </div>
+        </div>
+      </div>
+
+    <div class="rankDiv">
+      <table id="players" >
+        <h2 style = "margin-top: 30px; letter-spacing: 2px;">Result</h2>
+        <tr>
+          <th>Players</th>
+          <th>Speed</th>
+          <th>Accuracy</th>
+        </tr>
+        <tr>
+          <td>Alfreds </td>
+          <td>20 wpm</td>
+          <td>90%</td>
+        </tr>
+      </table>
+    </div>
+      <%- include('./template/footer.ejs'); -%>
+</body>
+</html>

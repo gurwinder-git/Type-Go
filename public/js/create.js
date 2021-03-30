@@ -1,4 +1,4 @@
-const socket = io.connect('http://localhost:4000');
+var socket = io.connect('http://localhost:4000');
 
 const link = "http://api.quotable.io/random";
 
@@ -11,16 +11,37 @@ var timeLeft = 6;
 var startInputTime = null;
 var endinputTime = null;
 var totalWords;
+var peraAfterFillingQuote = null;
+var hack = document.getElementById('hack');
+
+getNextQuote();
 
 startBtn.addEventListener('click', () => {
     // console.log('clicked');
+    // console.log(peraAfterFillingQuote);
+    if(peraAfterFillingQuote != undefined){
+        socket.emit('startGame',{
+            peraAfterFillingQuote : peraAfterFillingQuote,
+            totalWords : totalWords
+        });
+    }
+    peraAfterFillingQuote = null;
+    // textInSmallTag.innerText = "";
+    // textInSmallTag.classList.add('green');
+    // timeLeftSpan.classList.add('green');
+    // startBtn.disabled = true;
+    // countDown();
+    // setTimeout(getNextQuote,2000);
+});
+
+socket.on('startGame',()=>{
+    countDown();
+    setTimeout(()=>{hack.style.display = 'block';},4000);
     textInSmallTag.innerText = "";
     textInSmallTag.classList.add('green');
     timeLeftSpan.classList.add('green');
     startBtn.disabled = true;
-    countDown();
-    setTimeout(getNextQuote,2000);
-});
+})
 
 
 function countDown() {
@@ -41,6 +62,10 @@ function countDown() {
                 case 1:
                     myText.disabled = false;
                     myText.focus();
+                    if(startInputTime == null){
+                        startInputTime = new Date().getTime();
+                        console.log('start time',startInputTime);
+                    }
                     break;
                 case 3:
                     textInSmallTag.classList.add('red');
@@ -80,6 +105,7 @@ async function getNextQuote() {
         // console.log(characterSpan);
 
     });
+    peraAfterFillingQuote = pera.outerHTML;
     myText.value = "";  //not neccesary
 }
 
@@ -90,6 +116,12 @@ function wpmFunc(){
     var timeTakenToInputInMinutes = diff/60000;
     var wpm = Math.round(totalWords/timeTakenToInputInMinutes);
     console.log('wpm:', wpm);
+    //emit events
+    socket.emit('result',{
+        wpm : wpm,
+        accuracy : 100
+    });
+
     startInputTime = null;
     endinputTime = null;
 }
@@ -97,10 +129,10 @@ function wpmFunc(){
 // adding event listener on textarea when stating input
 
 myText.addEventListener('input', () => {
-    if(startInputTime == null){
-        startInputTime = new Date().getTime();
-        console.log('start time',startInputTime);
-    }
+    // if(startInputTime == null){
+    //     startInputTime = new Date().getTime();
+    //     console.log('start time',startInputTime);
+    // }
 
     var quoteArray = document.getElementsByClassName('mySpan');
     // console.log(quoteArray);
@@ -144,7 +176,17 @@ myText.addEventListener('input', () => {
         textInSmallTag.innerText = "";
         timeLeftSpan.innerText = "";
         myText.value = ""; 
+        hack.style.display = "none";
         pera.innerHTML = "";
+        getNextQuote();
         // console.log('you typed correct');
     }
 })
+
+
+//listen events
+socket.on('result',(myData)=>{
+    console.log(myData);
+})
+
+// console.log(socket);

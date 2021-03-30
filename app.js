@@ -21,24 +21,40 @@ app.get('/', (req, res) => {
   res.render('home');
 })
 
-app.post('/multiplayer', (req, res) => {
+app.post('/creategame', (req, res) => {
   console.log(req.body);
-  res.render('multiplayer');
+  res.render('creategame');
+})
+
+app.post('/joingame', (req, res) => {
+  console.log(req.body);
+  res.render('joingame');
 })
 
 app.get('/about', (req, res) => {
   res.render('about');
 })
 
+
+//server setup
 const server = app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-// console.log("me "+server.maxHeaderSize);
 
+//socket io setup
 const io = socket(server);
 
 io.on('connection',(socket)=>{
   console.log('connection made',socket.id);
-})
 
+  socket.on('result',(myData)=>{
+    // console.log(myData);
+    io.sockets.emit('result',myData);
+  })
+
+  socket.on('startGame',(startCredentials)=>{
+    // console.log(startCredentials);
+    io.sockets.emit('startGame',startCredentials);
+  })
+});

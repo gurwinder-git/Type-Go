@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../css/multi.css">
 
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js" integrity="sha512-2RDFHqfLZW8IhPRvQYmK9bTLfj/hddxGXQAred2wNZGkrKQkLGj8RCkXfRJPHlDerdHHIzTFaahq4s/P4V6Qig==" crossorigin="anonymous"></script>
-    <script defer src="../js/multi.js"></script>
+    <script defer src="../js/join.js"></script>
 </head>
 
 <body>
@@ -24,7 +24,9 @@
         </div>
 
         <div class="typeDiv center shadow">
-            <p class="words shadow" id = "pera" ></p>
+            <div id="hack" style="display: none;">
+                <p class="words shadow" id = "pera" ></p>
+            </div>  
 
             <h1 class="center" id="timer">2:00</h1>
 
@@ -32,7 +34,7 @@
             <small style="font-weight: bolder;" id = "textInSmallTag" class = "green"> </small><small id="timeLeftSpan" class = "green" style="font-weight: bolder;" ></small> 
 
             <div class="btnDiv">
-                <button id = "startBtn">Start</button>
+                <button id = "leveBtn">Leave Rase</button>
                 <button id = "homeBtn">Home</button>
             </div>
         </div>
