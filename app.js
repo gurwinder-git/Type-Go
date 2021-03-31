@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const socket = require('socket.io');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const path = require('path');
-const Game = require('./models/game');
-const quotableAPI = require('./quotableAPI');
+// const Game = require('./models/game');
+// const quotableAPI = require('./quotableAPI');
 const port = 4000;
 
 app.use(express.urlencoded())
@@ -22,12 +22,12 @@ app.get('/', (req, res) => {
 })
 
 app.post('/creategame', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   res.render('creategame');
 })
 
 app.post('/joingame', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   res.render('joingame');
 })
 
@@ -46,15 +46,32 @@ const server = app.listen(port, () => {
 const io = socket(server);
 
 io.on('connection',(socket)=>{
-  console.log('connection made',socket.id);
+  // console.log('connection made',socket.id);
+  
+  socket.on('createRoom',(roomCode)=>{
+    socket.join(roomCode.roomCode);                                   //this will create room
+    console.log('room created having id:',roomCode.roomCode);
+    // socket.emit('createRoom', roomCode);
+    // console.log(rooms);
+  })
 
-  socket.on('result',(myData)=>{
-    // console.log(myData);
-    io.sockets.emit('result',myData);
+  socket.on('joinRoom',(roomCode)=>{
+    socket.join(roomCode.roomCode);
+    console.log('room joined having id:',roomCode.roomCode);
+    // socket.emit('createRoom', roomCode);
+    // console.log(rooms);
   })
 
   socket.on('startGame',(startCredentials)=>{
-    // console.log(startCredentials);
-    io.sockets.emit('startGame',startCredentials);
+    // console.log(startCredentials.roomCode);
+    io.sockets.in(startCredentials.roomCode).emit('startGame',startCredentials);
+    // io.sockets.emit('startGame',startCredentials);
   })
+  
+  socket.on('result',(myData)=>{
+    // console.log(myData);
+    io.sockets.in(myData.roomCode).emit('result',myData);
+    // io.sockets.emit('result',myData);
+  })
+
 });

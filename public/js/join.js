@@ -12,6 +12,9 @@ var endinputTime = null;
 var totalWords;
 var hack = document.getElementById('hack');
 
+socket.emit('joinRoom',{
+    roomCode : 'dshg34363746c4t'
+})
 
 socket.on('startGame',(startCredentials)=>{
     countDown();
@@ -99,7 +102,8 @@ function wpmFunc(){
     //emit events
     socket.emit('result',{
         wpm : wpm,
-        accuracy : 100
+        accuracy : 100,
+        roomCode : 'dshg34363746c4t'
     });
 
     startInputTime = null;

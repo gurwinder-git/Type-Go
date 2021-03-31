@@ -16,13 +16,26 @@ var hack = document.getElementById('hack');
 
 getNextQuote();
 
+//emit event
+socket.emit('createRoom',{
+    roomCode : 'dshg34363746c4t'
+})
+
+//listen event
+
+socket.on('createRoom',(roomCode)=>{
+    console.log(roomCode);
+})
+
+
 startBtn.addEventListener('click', () => {
     // console.log('clicked');
     // console.log(peraAfterFillingQuote);
     if(peraAfterFillingQuote != undefined){
         socket.emit('startGame',{
             peraAfterFillingQuote : peraAfterFillingQuote,
-            totalWords : totalWords
+            totalWords : totalWords,
+            roomCode : 'dshg34363746c4t'
         });
     }
     peraAfterFillingQuote = null;
@@ -119,7 +132,8 @@ function wpmFunc(){
     //emit events
     socket.emit('result',{
         wpm : wpm,
-        accuracy : 100
+        accuracy : 100,
+        roomCode : 'dshg34363746c4t'
     });
 
     startInputTime = null;
