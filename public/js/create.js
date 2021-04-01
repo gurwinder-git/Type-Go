@@ -18,7 +18,8 @@ getNextQuote();
 
 //emit event
 socket.emit('createRoom',{
-    roomCode : 'dshg34363746c4t'
+    roomCode : JSON.parse(localStorage.getItem('roomName')),
+    nickName : JSON.parse(localStorage.getItem('nickName'))
 })
 
 //listen event
@@ -35,7 +36,8 @@ startBtn.addEventListener('click', () => {
         socket.emit('startGame',{
             peraAfterFillingQuote : peraAfterFillingQuote,
             totalWords : totalWords,
-            roomCode : 'dshg34363746c4t'
+            roomCode : JSON.parse(localStorage.getItem('roomName')),
+            nickName : JSON.parse(localStorage.getItem('nickName'))
         });
     }
     peraAfterFillingQuote = null;
@@ -133,7 +135,8 @@ function wpmFunc(){
     socket.emit('result',{
         wpm : wpm,
         accuracy : 100,
-        roomCode : 'dshg34363746c4t'
+        roomCode : JSON.parse(localStorage.getItem('roomName')),
+        nickName : JSON.parse(localStorage.getItem('nickName'))
     });
 
     startInputTime = null;

@@ -3,6 +3,7 @@ const app = express();
 const socket = require('socket.io');
 // const mongoose = require('mongoose');
 const path = require('path');
+const { render } = require('ejs');
 // const Game = require('./models/game');
 // const quotableAPI = require('./quotableAPI');
 const port = 4000;
@@ -22,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/creategame', (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   res.render('creategame');
 })
 
@@ -45,10 +46,14 @@ const server = app.listen(port, () => {
 //socket io setup
 const io = socket(server);
 
+var rooms = [];
+
+
 io.on('connection',(socket)=>{
   // console.log('connection made',socket.id);
   
   socket.on('createRoom',(roomCode)=>{
+    rooms.push(roomCode.roomCode);
     socket.join(roomCode.roomCode);                                   //this will create room
     console.log('room created having id:',roomCode.roomCode);
     // socket.emit('createRoom', roomCode);
@@ -56,8 +61,15 @@ io.on('connection',(socket)=>{
   })
 
   socket.on('joinRoom',(roomCode)=>{
-    socket.join(roomCode.roomCode);
-    console.log('room joined having id:',roomCode.roomCode);
+    if(rooms.includes(roomCode.roomCode)){
+      socket.join(roomCode.roomCode);
+      console.log('room joined having id:',roomCode.roomCode);
+    }
+
+    else{
+        // console.log('not exits');
+        socket.emit('joinError', "This room is not exist please Create a Room or play Singleplayer Game");
+    }
     // socket.emit('createRoom', roomCode);
     // console.log(rooms);
   })

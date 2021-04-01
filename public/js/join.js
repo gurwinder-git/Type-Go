@@ -13,7 +13,12 @@ var totalWords;
 var hack = document.getElementById('hack');
 
 socket.emit('joinRoom',{
-    roomCode : 'dshg34363746c4t'
+    roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
+    nickName : JSON.parse(localStorage.getItem('nickNameOfJoinUser'))
+})
+
+socket.on('joinError',(message)=>{
+    document.getElementById('containerId').innerHTML = `<h1>${message}</h1>`;
 })
 
 socket.on('startGame',(startCredentials)=>{
@@ -103,7 +108,8 @@ function wpmFunc(){
     socket.emit('result',{
         wpm : wpm,
         accuracy : 100,
-        roomCode : 'dshg34363746c4t'
+        roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
+        nickName : localStorage.getItem(('nickNameOfJoinUser'))
     });
 
     startInputTime = null;
