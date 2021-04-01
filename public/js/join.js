@@ -12,6 +12,9 @@ var endinputTime = null;
 var totalWords;
 var hack = document.getElementById('hack');
 
+document.getElementById('roomName').innerText = localStorage.getItem('roomNameOfJoinUser');
+
+//emit event
 socket.emit('joinRoom',{
     roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
     nickName : JSON.parse(localStorage.getItem('nickNameOfJoinUser'))

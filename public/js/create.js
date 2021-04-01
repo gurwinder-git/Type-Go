@@ -16,6 +16,8 @@ var hack = document.getElementById('hack');
 
 getNextQuote();
 
+document.getElementById('roomName').innerText = localStorage.getItem('roomName');
+
 //emit event
 socket.emit('createRoom',{
     roomCode : JSON.parse(localStorage.getItem('roomName')),
@@ -24,9 +26,9 @@ socket.emit('createRoom',{
 
 //listen event
 
-socket.on('createRoom',(roomCode)=>{
-    console.log(roomCode);
-})
+// socket.on('createRoom',(roomCode)=>{
+//     console.log(roomCode);
+// })
 
 
 startBtn.addEventListener('click', () => {

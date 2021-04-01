@@ -67,7 +67,7 @@ io.on('connection',(socket)=>{
     }
 
     else{
-        // console.log('not exits');
+        console.log('not exits');
         socket.emit('joinError', "This room is not exist please Create a Room or play Singleplayer Game");
     }
     // socket.emit('createRoom', roomCode);
