@@ -1,7 +1,7 @@
 // var socket = io.connect('http://localhost:4000');
 var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
 
-const link = "http://api.quotable.io/random";
+const link = "https://api.quotable.io/random";
 
 var pera = document.getElementById('pera');
 var myText = document.getElementById('myText');
