@@ -38,15 +38,13 @@ nav{
 
 /* footer css */
 .footer{
-    background-color: #484848;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    position: inherit;
-    bottom: 0px;
-    width: 100%;
-    border-top: 1px grey solid;
+    position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+            /* Height of the footer*/ 
+            height: 40px;
+            background: grey;
 
     
 }

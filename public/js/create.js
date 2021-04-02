@@ -1,5 +1,5 @@
-// var socket = io.connect('http://localhost:4000');
-var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
+var socket = io.connect('http://localhost:4000');
+// var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
 
 const link = "https://api.quotable.io/random";
 
@@ -25,11 +25,6 @@ socket.emit('createRoom',{
     nickName : JSON.parse(localStorage.getItem('nickName'))
 })
 
-//listen event
-
-// socket.on('createRoom',(roomCode)=>{
-//     console.log(roomCode);
-// })
 
 
 startBtn.addEventListener('click', () => {
