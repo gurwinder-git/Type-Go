@@ -3,10 +3,10 @@ const app = express();
 const socket = require('socket.io');
 // const mongoose = require('mongoose');
 const path = require('path');
-const { render } = require('ejs');
+// const { render } = require('ejs');
 // const Game = require('./models/game');
 // const quotableAPI = require('./quotableAPI');
-const port = 4000;
+const port = process.env.PORT || 4000 ;
 
 app.use(express.urlencoded())
 
@@ -85,5 +85,4 @@ io.on('connection',(socket)=>{
     io.sockets.in(myData.roomCode).emit('result',myData);
     // io.sockets.emit('result',myData);
   })
-
 });
