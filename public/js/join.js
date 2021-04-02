@@ -25,6 +25,7 @@ socket.on('joinError',(message)=>{
     document.getElementById('containerId').innerHTML = `<h1>${message}</h1>`;
 })
 
+//listerm startGame event
 socket.on('startGame',(startCredentials)=>{
     countDown();
     totalWords = startCredentials.totalWords;
