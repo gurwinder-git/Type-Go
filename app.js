@@ -54,7 +54,7 @@ io.on('connection',(socket)=>{
   
   socket.on('createRoom',(roomCode)=>{
     rooms.push(roomCode.roomCode);
-    socket.join(roomCode.roomCode);                                   //this will create room
+    socket.join(roomCode.roomCode);
     console.log('room created having id:',roomCode.roomCode);
     // socket.emit('createRoom', roomCode);
     // console.log(rooms);
@@ -64,14 +64,24 @@ io.on('connection',(socket)=>{
     if(rooms.includes(roomCode.roomCode)){
       socket.join(roomCode.roomCode);
       console.log('room joined having id:',roomCode.roomCode);
+
+      let joinedUserId = socket.id;
+      io.sockets.in(roomCode.roomCode).emit('joinedRoom',joinedUserId,roomCode);
+      socket.broadcast.to(roomCode.roomCode).emit('newlyJoinedUser', roomCode);
     }
 
     else{
         console.log('Room not exits');
         socket.emit('joinError', "This room is not exist please Create a Room or play Singleplayer Game");
     }
-    // socket.emit('createRoom', roomCode);
-    // console.log(rooms);
+  })
+
+  socket.on('thenIamSendingMyDataToJoinedUser',(recived)=>{
+    socket.broadcast.to(recived.idOfJoinedUser).emit('okISendedMyDataToJoinedUser',recived);
+  })
+
+  socket.on('brodcastMyDataToOnlyNewlyJoinedUser',(dataFromJoinUser)=>{
+    socket.broadcast.to(dataFromJoinUser.roomCode).emit('okISendMyDataToNewlyJoinedUser',dataFromJoinUser);
   })
 
   socket.on('startGame',(startCredentials)=>{

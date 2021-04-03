@@ -1,5 +1,5 @@
-// var socket = io.connect('http://localhost:4000');
-var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
+var socket = io.connect('http://localhost:4000');
+// var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
 
 const link = "https://api.quotable.io/random";
 
@@ -18,6 +18,7 @@ var hack = document.getElementById('hack');
 getNextQuote();
 
 document.getElementById('roomName').innerText = localStorage.getItem('roomName');
+document.getElementById('inGame').innerHTML += `<h4>${JSON.parse(localStorage.getItem('nickName'))}</h4>`;
 
 //emit event
 socket.emit('createRoom',{
@@ -205,3 +206,28 @@ socket.on('result',(myData)=>{
 })
 
 // console.log(socket);
+
+
+// socket.emit('showMyBar',{
+//     roomCode : JSON.parse(localStorage.getItem('roomName')),
+//     nickName : JSON.parse(localStorage.getItem('nickName'))
+// })
+
+// socket.on('showMyBar',(myData)=>{
+//     console.log('user joined')
+    
+// })
+
+
+//listening who joined room
+
+socket.on('joinedRoom',(idOfJoinedUser,joinedUserData)=>{
+    console.log(joinedUserData);
+    document.getElementById('inGame').innerHTML += `<h4>${joinedUserData.nickName}</h4>`;
+    socket.emit('thenIamSendingMyDataToJoinedUser',{
+        roomCode : JSON.parse(localStorage.getItem('roomName')),
+        nickName : JSON.parse(localStorage.getItem('nickName')),
+        idOfJoinedUser: idOfJoinedUser
+    })
+})
+
