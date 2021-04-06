@@ -67,7 +67,7 @@ io.on('connection',(socket)=>{
 
       let joinedUserId = socket.id;
       io.sockets.in(roomCode.roomCode).emit('joinedRoom',joinedUserId,roomCode);
-      socket.broadcast.to(roomCode.roomCode).emit('newlyJoinedUser', roomCode);
+      socket.broadcast.to(roomCode.roomCode).emit('newlyJoinedUser', roomCode, joinedUserId);
     }
 
     else{
@@ -77,11 +77,13 @@ io.on('connection',(socket)=>{
   })
 
   socket.on('thenIamSendingMyDataToJoinedUser',(recived)=>{
-    socket.broadcast.to(recived.idOfJoinedUser).emit('okISendedMyDataToJoinedUser',recived);
+    let createrId = socket.id;
+    socket.broadcast.to(recived.idOfJoinedUser).emit('okISendedMyDataToJoinedUser',recived,createrId);
   })
 
   socket.on('brodcastMyDataToOnlyNewlyJoinedUser',(dataFromJoinUser)=>{
-    socket.broadcast.to(dataFromJoinUser.roomCode).emit('okISendMyDataToNewlyJoinedUser',dataFromJoinUser);
+    let joinedUserId = socket.id;
+    socket.broadcast.to(dataFromJoinUser.roomCode).emit('okISendMyDataToNewlyJoinedUser',dataFromJoinUser,joinedUserId);
   })
 
   socket.on('startGame',(startCredentials)=>{

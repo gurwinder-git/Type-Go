@@ -1,5 +1,5 @@
-// var socket = io.connect('http://localhost:4000');
-var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
+var socket = io.connect('http://localhost:4000');
+// var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
 
 const link = "https://api.quotable.io/random";
 
@@ -18,7 +18,11 @@ var hack = document.getElementById('hack');
 getNextQuote();
 
 document.getElementById('roomName').innerText = localStorage.getItem('roomName');
-document.getElementById('inGame').innerHTML += `<h4>${JSON.parse(localStorage.getItem('nickName'))}</h4>`;
+document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${JSON.parse(localStorage.getItem('nickName'))}</h3>
+                                                    <div class="myProgress">
+                                                    <div class="myBar" id = "${JSON.parse(localStorage.getItem('nickName'))}"></div>
+                                                </div>`;
+
 
 //emit event
 socket.emit('createRoom',{
@@ -223,7 +227,10 @@ socket.on('result',(myData)=>{
 
 socket.on('joinedRoom',(idOfJoinedUser,joinedUserData)=>{
     console.log(joinedUserData);
-    document.getElementById('inGame').innerHTML += `<h4>${joinedUserData.nickName}</h4>`;
+    document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${joinedUserData.nickName}</h3>
+                                                        <div class="myProgress">
+                                                        <div class="myBar" id = "${idOfJoinedUser}"></div>
+                                                    </div>`;
     socket.emit('thenIamSendingMyDataToJoinedUser',{
         roomCode : JSON.parse(localStorage.getItem('roomName')),
         nickName : JSON.parse(localStorage.getItem('nickName')),
