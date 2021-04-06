@@ -95,4 +95,5 @@ io.on('connection',(socket)=>{
     io.sockets.in(myData.roomCode).emit('result',myData);
     // io.sockets.emit('result',myData);
   })
+
 });
