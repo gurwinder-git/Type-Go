@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/creategame', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   res.render('creategame');
 })
 
@@ -55,7 +55,7 @@ io.on('connection',(socket)=>{
   socket.on('createRoom',(roomCode)=>{
     rooms.push(roomCode.roomCode);
     socket.join(roomCode.roomCode);
-    console.log('room created having id:',roomCode.roomCode);
+    // console.log('room created having id:',roomCode.roomCode);
     // socket.emit('createRoom', roomCode);
     // console.log(rooms);
   })
@@ -63,11 +63,11 @@ io.on('connection',(socket)=>{
   socket.on('joinRoom',(roomCode)=>{
     if(rooms.includes(roomCode.roomCode)){
       socket.join(roomCode.roomCode);
-      console.log('room joined having id:',roomCode.roomCode);
+      // console.log('room joined having id:',roomCode.roomCode);
 
       let joinedUserId = socket.id;
       io.sockets.in(roomCode.roomCode).emit('joinedRoom',joinedUserId,roomCode);
-      socket.broadcast.to(roomCode.roomCode).emit('newlyJoinedUser', roomCode);
+      socket.broadcast.to(roomCode.roomCode).emit('newlyJoinedUser', roomCode, joinedUserId);
     }
 
     else{
@@ -77,11 +77,13 @@ io.on('connection',(socket)=>{
   })
 
   socket.on('thenIamSendingMyDataToJoinedUser',(recived)=>{
-    socket.broadcast.to(recived.idOfJoinedUser).emit('okISendedMyDataToJoinedUser',recived);
+    let createrId = socket.id;
+    socket.broadcast.to(recived.idOfJoinedUser).emit('okISendedMyDataToJoinedUser',recived,createrId);
   })
 
   socket.on('brodcastMyDataToOnlyNewlyJoinedUser',(dataFromJoinUser)=>{
-    socket.broadcast.to(dataFromJoinUser.roomCode).emit('okISendMyDataToNewlyJoinedUser',dataFromJoinUser);
+    let joinedUserId = socket.id;
+    socket.broadcast.to(dataFromJoinUser.roomCode).emit('okISendMyDataToNewlyJoinedUser',dataFromJoinUser,joinedUserId);
   })
 
   socket.on('startGame',(startCredentials)=>{
@@ -90,10 +92,15 @@ io.on('connection',(socket)=>{
     // io.sockets.emit('startGame',startCredentials);
   })
   
-  socket.on('result',(myData)=>{
-    // console.log(myData);
-    io.sockets.in(myData.roomCode).emit('result',myData);
-    // io.sockets.emit('result',myData);
+  socket.on('updateProgressBar', (myData)=>{
+    socket.broadcast.to(myData.roomCode).emit('updatingBar',myData.calculateWidthOfProgressBar,socket.id);
   })
 
+  socket.on('result',(myData)=>{
+    io.sockets.in(myData.roomCode).emit('result',myData);
+  })
+
+  socket.on('disconnecting', (myData) => {
+    console.log(myData) // the Set contains at least the socket ID
+  });
 });

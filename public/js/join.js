@@ -14,7 +14,12 @@ var totalWords;
 var hack = document.getElementById('hack');
 
 document.getElementById('roomName').innerText = localStorage.getItem('roomNameOfJoinUser');
-document.getElementById('inGame').innerHTML += `<h4>${JSON.parse(localStorage.getItem('nickNameOfJoinUser'))}</h4>`;
+document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${JSON.parse(localStorage.getItem('nickNameOfJoinUser'))}</h3>
+<div class="myProgress">
+<div class="myBar" id = "${JSON.parse(localStorage.getItem('nickNameOfJoinUser'))}"></div>
+</div>`;
+
+
 //emit event
 socket.emit('joinRoom',{
     roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
@@ -35,6 +40,10 @@ socket.on('startGame',(startCredentials)=>{
     textInSmallTag.innerText = "";
     textInSmallTag.classList.add('green');
     timeLeftSpan.classList.add('green');
+
+    for (let x = 0; x < document.getElementsByClassName('myBar').length; x++  ){
+        document.getElementsByClassName('myBar')[x].style.width = '0%';
+    }
 })
 
 
@@ -161,6 +170,15 @@ myText.addEventListener('input', () => {
             }
         }
     }
+
+    calculateWidthOfProgressBar = (document.getElementsByClassName('correct').length/quoteArray.length)*100;
+    updateProgressBar(calculateWidthOfProgressBar);
+
+    socket.emit('updateProgressBar',{
+        roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
+        calculateWidthOfProgressBar: calculateWidthOfProgressBar
+    });
+
     if(isCorrect){
         endinputTime = new Date().getTime();
         console.log('end time',endinputTime);
@@ -182,40 +200,26 @@ socket.on('result',(myData)=>{
     console.log(myData);
 })
 
-// console.log(socket);
-
-// socket.emit('showMyBar',{
-//     roomCode : JSON.parse(localStorage.getItem('roomName')),
-//     nickName : JSON.parse(localStorage.getItem('nickName'))
-// })
-
-// socket.on('showMyBar',(myData)=>{
-//     console.log('user joined')
-//     socket.emit('showMyBar',{
-//         roomCode : JSON.parse(localStorage.getItem('roomName')),
-//         nickName : JSON.parse(localStorage.getItem('nickName'))
-//     })
-// })
-
-// socket.on('showMyBar', (myData)=>{
-//     // console.log('user joined',myData);
-
-// })
 
 //taking data of create user
 
-socket.on('okISendedMyDataToJoinedUser',(okISendedMyDataToJoinedUser)=>{
-    document.getElementById('inGame').innerHTML += `<h4>${okISendedMyDataToJoinedUser.nickName}</h4>`;
-    console.log(okISendedMyDataToJoinedUser);
+socket.on('okISendedMyDataToJoinedUser',(okISendedMyDataToJoinedUser,joinedUserId)=>{
+    document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${okISendedMyDataToJoinedUser.nickName}</h3>
+                                                        <div class="myProgress">
+                                                        <div class="myBar" id = "${joinedUserId}"></div>
+                                                    </div>`;
 })
 
 
 
-//////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-socket.on('newlyJoinedUser',(newlyJoinedUser)=>{   //  this will run for newly user
+socket.on('newlyJoinedUser',(newlyJoinedUser, joinedUserId)=>{   
     console.log(newlyJoinedUser); 
-    document.getElementById('inGame').innerHTML += `<h4>${newlyJoinedUser.nickName}</h4>`;
+    document.getElementById('inGame').innerHTML +=`<h3 class = "topMargin" >${newlyJoinedUser.nickName}</h3>
+    <div class="myProgress">
+    <div class="myBar" id = "${joinedUserId}"></div>
+</div>`;
 
     socket.emit('brodcastMyDataToOnlyNewlyJoinedUser',{
         roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
@@ -224,7 +228,22 @@ socket.on('newlyJoinedUser',(newlyJoinedUser)=>{   //  this will run for newly u
 })
 
 
-socket.on('okISendMyDataToNewlyJoinedUser',(okISendMyDataToNewlyJoinedUser)=>{
-    document.getElementById('inGame').innerHTML += `<h4>${okISendMyDataToNewlyJoinedUser.nickName}</h4>`;
-    console.log(okISendMyDataToNewlyJoinedUser);     //this will  run for me
+socket.on('okISendMyDataToNewlyJoinedUser',(okISendMyDataToNewlyJoinedUser, joinedUserId)=>{
+    document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${okISendMyDataToNewlyJoinedUser.nickName}</h3>
+    <div class="myProgress">
+    <div class="myBar" id = "${joinedUserId}"></div>
+</div>`;
+    console.log(okISendMyDataToNewlyJoinedUser);     
+})
+
+//update my Bar
+
+function updateProgressBar(divWidth){
+    document.getElementById(JSON.parse(localStorage.getItem('nickNameOfJoinUser'))).style.width = divWidth+'%';
+}
+
+//listening width of Bar
+
+socket.on('updatingBar', (width,idOfAdmin)=>{
+    document.getElementById(idOfAdmin).style.width = width+'%';
 })
