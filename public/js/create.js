@@ -1,5 +1,5 @@
-var socket = io.connect('http://localhost:4000');
-// var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
+// var socket = io.connect('http://localhost:4000');
+var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
 
 const link = "https://api.quotable.io/random";
 
@@ -264,9 +264,3 @@ socket.on('updatingBar', (width,idOfAdmin)=>{
     document.getElementById(idOfAdmin).style.width = width+'%';
 })
 
-
-//listen who left room
-
-socket.on('leftRoom',(idOfUser)=>{
-    console.log(idOfUser);
-})
