@@ -40,6 +40,10 @@ socket.on('startGame',(startCredentials)=>{
     textInSmallTag.innerText = "";
     textInSmallTag.classList.add('green');
     timeLeftSpan.classList.add('green');
+
+    for (let x = 0; x < document.getElementsByClassName('myBar').length; x++  ){
+        document.getElementsByClassName('myBar')[x].style.width = '0%';
+    }
 })
 
 
@@ -166,6 +170,15 @@ myText.addEventListener('input', () => {
             }
         }
     }
+
+    calculateWidthOfProgressBar = (document.getElementsByClassName('correct').length/quoteArray.length)*100;
+    updateProgressBar(calculateWidthOfProgressBar);
+
+    socket.emit('updateProgressBar',{
+        roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
+        calculateWidthOfProgressBar: calculateWidthOfProgressBar
+    });
+
     if(isCorrect){
         endinputTime = new Date().getTime();
         console.log('end time',endinputTime);
@@ -221,4 +234,16 @@ socket.on('okISendMyDataToNewlyJoinedUser',(okISendMyDataToNewlyJoinedUser, join
     <div class="myBar" id = "${joinedUserId}"></div>
 </div>`;
     console.log(okISendMyDataToNewlyJoinedUser);     
+})
+
+//update my Bar
+
+function updateProgressBar(divWidth){
+    document.getElementById(JSON.parse(localStorage.getItem('nickNameOfJoinUser'))).style.width = divWidth+'%';
+}
+
+//listening width of Bar
+
+socket.on('updatingBar', (width,idOfAdmin)=>{
+    document.getElementById(idOfAdmin).style.width = width+'%';
 })

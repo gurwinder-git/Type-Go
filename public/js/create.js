@@ -14,6 +14,7 @@ var endinputTime = null;
 var totalWords;
 var peraAfterFillingQuote = null;
 var hack = document.getElementById('hack');
+var calculateWidthOfProgressBar;
 
 getNextQuote();
 
@@ -59,6 +60,10 @@ socket.on('startGame',()=>{
     textInSmallTag.classList.add('green');
     timeLeftSpan.classList.add('green');
     startBtn.disabled = true;
+
+    for (let x = 0; x < document.getElementsByClassName('myBar').length; x++  ){
+        document.getElementsByClassName('myBar')[x].style.width = '0%';
+    }
 })
 
 
@@ -176,6 +181,7 @@ myText.addEventListener('input', () => {
             quoteArray[i].classList.add('correct');
             quoteArray[i].classList.remove('incorrect');
         }
+
         else{
             // console.log(quoteArray[i].classList);
             if(quoteArray[i].classList != undefined){
@@ -186,6 +192,14 @@ myText.addEventListener('input', () => {
             }
         }
     }
+    calculateWidthOfProgressBar = (document.getElementsByClassName('correct').length/quoteArray.length)*100;
+    updateProgressBar(calculateWidthOfProgressBar);
+
+    socket.emit('updateProgressBar',{
+        roomCode : JSON.parse(localStorage.getItem('roomName')),
+        calculateWidthOfProgressBar: calculateWidthOfProgressBar
+    });
+
     if(isCorrect){
         endinputTime = new Date().getTime();
         console.log('end time',endinputTime);
@@ -238,3 +252,21 @@ socket.on('joinedRoom',(idOfJoinedUser,joinedUserData)=>{
     })
 })
 
+// update progress bar
+
+function updateProgressBar(divWidth){
+    document.getElementById(JSON.parse(localStorage.getItem('nickName'))).style.width = divWidth+'%';
+}
+
+//listening update progress bar
+
+socket.on('updatingBar', (width,idOfAdmin)=>{
+    document.getElementById(idOfAdmin).style.width = width+'%';
+})
+
+
+//listen who left room
+
+socket.on('leftRoom',(idOfUser)=>{
+    console.log(idOfUser);
+})
