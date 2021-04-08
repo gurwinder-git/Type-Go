@@ -264,3 +264,14 @@ socket.on('updatingBar', (width,idOfAdmin)=>{
     document.getElementById(idOfAdmin).style.width = width+'%';
 })
 
+//listen someone leave room
+
+socket.on('left', (idofUser)=>{
+    // console.log(idofUser);
+    let player = document.getElementById(idofUser);
+    player.innerText = 'Left The Game';
+    player.style.display = 'inline';
+    player.style.color = 'red';
+    player.style.backgroundColor = '#dddddd';
+    player.style.fontSize = '25px';
+})

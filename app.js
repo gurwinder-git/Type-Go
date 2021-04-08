@@ -100,7 +100,10 @@ io.on('connection',(socket)=>{
     io.sockets.in(myData.roomCode).emit('result',myData);
   })
 
-  socket.on('disconnecting', (myData) => {
-    console.log(myData) // the Set contains at least the socket ID
+  socket.on('disconnecting', () => {
+    console.log(Array.from(socket.rooms)[1]);
+    socket.broadcast.to(Array.from(socket.rooms)[1]).emit('left',socket.id);
+    socket.broadcast.to(Array.from(socket.rooms)[1]).emit('Adminleft');
   });
+
 });
