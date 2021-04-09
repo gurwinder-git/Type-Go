@@ -98,9 +98,20 @@ io.on('connection',(socket)=>{
   })
 
   socket.on('disconnecting', () => {
-    console.log("leaved ",Array.from(socket.rooms)[1]);
+    // console.log("leaved ",Array.from(socket.rooms)[1]);
     socket.broadcast.to(Array.from(socket.rooms)[1]).emit('left',socket.id);
     socket.broadcast.to(Array.from(socket.rooms)[1]).emit('Adminleft',socket.id);
   });
+
+  socket.on('deleteRoom', ()=>{
+    let roomName = Array.from(socket.rooms)[1];
+    const index = rooms.indexOf(roomName);
+    if (index > -1) {
+      rooms.splice(index, 1);
+      console.log('room deleted');
+    }
+    // console.log("deleteRoom ",Array.from(socket.rooms)[1]);
+    // console.log(roomName.rooms);
+  })
 
 });
