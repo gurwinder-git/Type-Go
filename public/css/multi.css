@@ -1,21 +1,23 @@
 *{
-    /* border:1px solid black !important; */
+    /* border:1px solid black 1px!important; */
     box-sizing: border-box;
     margin: 0px;
-    padding: 0px;
+    /* padding: 3px;     */
 }
 
 .topMargin{
     margin-top: 10px;
 }
 
-/* body{
+a {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    width: 100%;
-} */
+}
+
+main{
+    min-height: 87vh;
+}
 
 .container{
     display: flex;
@@ -123,21 +125,17 @@ button:disabled{
 
 /* ranking div */
 .rankDiv{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    
+    width: 70%;
+    margin: 30px auto;
 } 
+
 
 
 /* table css */
 #players {
     /* font-family: Arial, Helvetica, sans-serif; */
     border-collapse: collapse;
-    width: 70%;
-    margin: 30px 0px;
+    width: 100%;
   }
   
   #players td, #players th {

@@ -50,14 +50,11 @@ var rooms = [];
 
 
 io.on('connection',(socket)=>{
-  // console.log('connection made',socket.id);
-  
+
   socket.on('createRoom',(roomCode)=>{
-    rooms.push(roomCode.roomCode);
-    socket.join(roomCode.roomCode);
-    // console.log('room created having id:',roomCode.roomCode);
-    // socket.emit('createRoom', roomCode);
-    // console.log(rooms);
+      rooms.push(roomCode.roomCode);
+      socket.join(roomCode.roomCode);
+      console.log('created',roomCode.roomCode);
   })
 
   socket.on('joinRoom',(roomCode)=>{
@@ -72,7 +69,7 @@ io.on('connection',(socket)=>{
 
     else{
         console.log('Room not exits');
-        socket.emit('joinError', "This room is not exist please Create a Room or play Singleplayer Game");
+        socket.emit('joinError', roomCode.roomCode);
     }
   })
 
@@ -101,9 +98,9 @@ io.on('connection',(socket)=>{
   })
 
   socket.on('disconnecting', () => {
-    console.log(Array.from(socket.rooms)[1]);
+    console.log("leaved ",Array.from(socket.rooms)[1]);
     socket.broadcast.to(Array.from(socket.rooms)[1]).emit('left',socket.id);
-    socket.broadcast.to(Array.from(socket.rooms)[1]).emit('Adminleft');
+    socket.broadcast.to(Array.from(socket.rooms)[1]).emit('Adminleft',socket.id);
   });
 
 });

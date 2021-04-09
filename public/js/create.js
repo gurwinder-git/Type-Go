@@ -1,5 +1,5 @@
-// var socket = io.connect('http://localhost:4000');
-var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
+var socket = io.connect('http://localhost:4000');
+// var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
 
 const link = "https://api.quotable.io/random";
 

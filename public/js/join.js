@@ -1,5 +1,5 @@
-// var socket = io.connect('http://localhost:4000');
-var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
+var socket = io.connect('http://localhost:4000');
+// var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
 
 const link = "https://api.quotable.io/random";
 
@@ -27,7 +27,8 @@ socket.emit('joinRoom',{
 })
 
 socket.on('joinError',(message)=>{
-    document.getElementById('containerId').innerHTML = `<h1>${message}</h1>`;
+    localStorage.setItem('joinError', JSON.stringify(message));
+    window.location.href = "http://localhost:4000";
 })
 
 //listerm startGame event
@@ -201,13 +202,14 @@ socket.on('result',(myData)=>{
 })
 
 
-//taking data of create user
+//taking data of Admin user
 
 socket.on('okISendedMyDataToJoinedUser',(okISendedMyDataToJoinedUser,joinedUserId)=>{
     document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${okISendedMyDataToJoinedUser.nickName}</h3>
-                                                        <div class="myProgress">
-                                                        <div class="myBar" id = "${joinedUserId}"></div>
+                                                    <div class="myProgress">
+                                                        <div class="myBar ${okISendedMyDataToJoinedUser.nickName}" id = "${joinedUserId}"></div>
                                                     </div>`;
+    localStorage.setItem('adminName',JSON.stringify(okISendedMyDataToJoinedUser.nickName));
 })
 
 
@@ -262,6 +264,12 @@ socket.on('left', (idofUser)=>{
 
 //listen if Admin left the game
 
-socket.on('Adminleft', ()=>{
-    window.location.href = "https://type-go-multiplayer.herokuapp.com";
+socket.on('Adminleft', (idOfUser)=>{
+    let getElement = document.getElementById(idOfUser);
+    let hasClassName= JSON.parse(localStorage.getItem('adminName'));
+
+    if(getElement.classList.contains(hasClassName)){
+        localStorage.setItem('adminLeftGame',JSON.stringify("Adimn left the Game"))
+        window.location.href = "http://localhost:4000";
+    }
 })

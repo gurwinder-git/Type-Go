@@ -19,4 +19,20 @@ document.getElementById('roomNameOfJoinUser').addEventListener('blur', ()=>{
     localStorage.setItem('roomNameOfJoinUser', JSON.stringify(roomNameOfJoinUser));
 })
 
+if(JSON.parse(localStorage.getItem('joinError')) != null){
+    let message = document.getElementById('message');
+    message.innerText = `Room ${JSON.parse(localStorage.getItem('joinError'))} not Exist!`;
+    let JoinAlert = document.getElementById('JoinAlert');
+    JoinAlert.classList.remove('d-none');
+    localStorage.removeItem('joinError');
+}
+
+if(JSON.parse(localStorage.getItem('adminLeftGame')) != null){
+    let adminLeftGame = document.getElementById('adminLeftGame');
+    adminLeftGame.innerText = JSON.parse(localStorage.getItem('adminLeftGame'));
+
+    let AdminAlert = document.getElementById('AdminAlert');
+    AdminAlert.classList.remove('d-none');
+    localStorage.removeItem('adminLeftGame');
+}
 
