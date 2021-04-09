@@ -46,6 +46,12 @@ socket.on('startGame',(startCredentials)=>{
     for (let x = 0; x < document.getElementsByClassName('myBar').length; x++  ){
         document.getElementsByClassName('myBar')[x].style.width = '0%';
     }
+
+    var elems = document.querySelectorAll(".deleteOnStart");
+    if(elems != undefined){
+        elems.forEach(function(element) {
+        element.parentNode.removeChild(element);
+    });}
 })
 
 
@@ -125,7 +131,7 @@ function wpmFunc(){
         wpm : wpm,
         accuracy : 100,
         roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
-        nickName : localStorage.getItem(('nickNameOfJoinUser'))
+        nickName : JSON.parse(localStorage.getItem('nickNameOfJoinUser'))
     });
 
     startInputTime = null;
@@ -200,6 +206,10 @@ myText.addEventListener('input', () => {
 //listen events
 socket.on('result',(myData)=>{
     console.log(myData);
+    document.getElementById('players').innerHTML += `<tr class = "deleteOnStart">
+                                                        <td>${myData.nickName}</td>
+                                                        <td>${myData.wpm} wpm</td>
+                                                    </tr>`
 })
 
 
