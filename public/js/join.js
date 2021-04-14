@@ -1,5 +1,5 @@
-var socket = io.connect('http://localhost:4000');
-// var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
+// var socket = io.connect('http://localhost:4000');
+var socket = io.connect('https://type-go-multiplayer.herokuapp.com/');
 
 const link = "https://api.quotable.io/random";
 
@@ -28,8 +28,8 @@ socket.emit('joinRoom',{
 
 socket.on('joinError',(message)=>{
     localStorage.setItem('joinError', JSON.stringify(message));
-    // window.location.href = 'https://type-go-multiplayer.herokuapp.com/';
-    window.location.href = 'http://localhost:4000';
+    window.location.href = 'https://type-go-multiplayer.herokuapp.com/';
+    // window.location.href = 'http://localhost:4000';
 })
 
 //listerm startGame event
@@ -282,8 +282,8 @@ socket.on('Adminleft', (idOfUser)=>{
     if(getElement.classList.contains(hasClassName)){
         localStorage.setItem('adminLeftGame',JSON.stringify("Admin left the Game"))
         socket.emit('deleteRoom');
-        // window.location.href = 'https://type-go-multiplayer.herokuapp.com/';
-        window.location.href = 'http://localhost:4000';
+        window.location.href = 'https://type-go-multiplayer.herokuapp.com/';
+        // window.location.href = 'http://localhost:4000';
 
     }
 })
