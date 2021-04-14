@@ -50,6 +50,7 @@ main{
     padding: 38px;
     margin-top: 21px;
     font-size: larger;
+    user-select : none;
 }
 
 .center{
@@ -109,7 +110,7 @@ button:disabled{
     margin-top: 30px;
     border-radius: 6px;
     padding: 10px;
-    font-size: x-large;
+    font-size: 1.3em;
     resize: none; 
     height: 180px;
 
@@ -167,3 +168,4 @@ button:disabled{
     height: 30px;
     background-color: #4CAF50;
   }
+
