@@ -275,15 +275,15 @@ socket.on('left', (idofUser)=>{
 
 //listen if Admin left the game
 
-socket.on('Adminleft', (idOfUser)=>{
-    let getElement = document.getElementById(idOfUser);
-    let hasClassName= JSON.parse(localStorage.getItem('adminName'));
+socket.on('Adminleft', ()=>{
+    // let getElement = document.getElementById(idOfUser);
+    // let hasClassName= JSON.parse(localStorage.getItem('adminName'));
 
-    if(getElement.classList.contains(hasClassName)){
+    // if(getElement.classList.contains(hasClassName)){
         localStorage.setItem('adminLeftGame',JSON.stringify("Admin left the Game"))
-        socket.emit('deleteRoom');
+        // socket.emit('deleteRoom');
         window.location.href = 'https://type-go-multiplayer.herokuapp.com/';
         // window.location.href = 'http://localhost:4000';
 
-    }
+    // }
 })

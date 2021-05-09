@@ -31,7 +31,12 @@ socket.emit('createRoom',{
     nickName : JSON.parse(localStorage.getItem('nickName'))
 })
 
-
+//lister createRomeError
+socket.on('createRomeError',()=>{
+    localStorage.setItem('roomCreatingError',JSON.stringify("This Room is choosen by someone else!"))
+    window.location.href = 'https://type-go-multiplayer.herokuapp.com/';
+    // window.location.href = 'http://localhost:4000';
+})
 
 startBtn.addEventListener('click', () => {
     // console.log('clicked');

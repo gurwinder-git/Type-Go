@@ -57,3 +57,8 @@ nav{
 .footer p{
     color: wheat;
 }
+
+a.disabled {
+    pointer-events: none;
+    color: #92856c;
+}

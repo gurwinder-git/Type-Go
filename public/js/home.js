@@ -1,20 +1,20 @@
-document.getElementById('nickName').addEventListener('blur', ()=>{
-    console.log('inside blur');
+document.getElementById('nickName').addEventListener('input', ()=>{
+    console.log(document.getElementById('nickName').value);
     let name = document.getElementById('nickName').value;
     localStorage.setItem('nickName', JSON.stringify(name));
 })
 
-document.getElementById('roomName').addEventListener('blur', ()=>{
+document.getElementById('roomName').addEventListener('input', ()=>{
     let room = document.getElementById('roomName').value;
     localStorage.setItem('roomName', JSON.stringify(room));
 })
 
-document.getElementById('nickNameOfJoinUser').addEventListener('blur', ()=>{
+document.getElementById('nickNameOfJoinUser').addEventListener('input', ()=>{
     let nickNameOfJoinUser = document.getElementById('nickNameOfJoinUser').value;
     localStorage.setItem('nickNameOfJoinUser', JSON.stringify(nickNameOfJoinUser));
 })
 
-document.getElementById('roomNameOfJoinUser').addEventListener('blur', ()=>{
+document.getElementById('roomNameOfJoinUser').addEventListener('input', ()=>{
     let roomNameOfJoinUser = document.getElementById('roomNameOfJoinUser').value;
     localStorage.setItem('roomNameOfJoinUser', JSON.stringify(roomNameOfJoinUser));
 })
@@ -34,5 +34,14 @@ if(JSON.parse(localStorage.getItem('adminLeftGame')) != null){
     let AdminAlert = document.getElementById('AdminAlert');
     AdminAlert.classList.remove('d-none');
     localStorage.removeItem('adminLeftGame');
+}
+
+if(JSON.parse(localStorage.getItem('roomCreatingError')) != null){
+    let roomExitAlready = document.getElementById('roomExitAlready');
+    roomExitAlready.innerText = JSON.parse(localStorage.getItem('roomCreatingError'));
+
+    let roomCreateError = document.getElementById('roomCreateError');
+    roomCreateError.classList.remove('d-none');
+    localStorage.removeItem('roomCreatingError');
 }
 

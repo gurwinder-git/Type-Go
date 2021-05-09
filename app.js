@@ -47,14 +47,20 @@ const server = app.listen(port, () => {
 const io = socket(server);
 
 var rooms = [];
-
+var adminSocketId = [];
 
 io.on('connection',(socket)=>{
 
   socket.on('createRoom',(roomCode)=>{
-      rooms.push(roomCode.roomCode);
-      socket.join(roomCode.roomCode);
-      console.log('created',roomCode.roomCode);
+      let index = rooms.indexOf(roomCode.roomCode);
+      if (index > -1) {
+        socket.emit('createRomeError');
+      }else{
+        rooms.push(roomCode.roomCode);
+        adminSocketId.push(socket.id);
+        socket.join(roomCode.roomCode);
+        // console.log('created',roomCode.roomCode, 'total rooms',rooms);
+      }
   })
 
   socket.on('joinRoom',(roomCode)=>{
@@ -68,7 +74,7 @@ io.on('connection',(socket)=>{
     }
 
     else{
-        console.log('Room not exits');
+        // console.log('Room not exits');
         socket.emit('joinError', roomCode.roomCode);
     }
   })
@@ -98,18 +104,26 @@ io.on('connection',(socket)=>{
   })
 
   socket.on('disconnecting', () => {
-    console.log("leaved ",Array.from(socket.rooms)[1]);
+    // console.log("leaved ",Array.from(socket.rooms)[1]);
     socket.broadcast.to(Array.from(socket.rooms)[1]).emit('left',socket.id);
-    socket.broadcast.to(Array.from(socket.rooms)[1]).emit('Adminleft',socket.id);
-  });
 
-  socket.on('deleteRoom', ()=>{
-    let roomName = Array.from(socket.rooms)[1];
-    const index = rooms.indexOf(roomName);
-    if (index > -1) {
-      rooms.splice(index, 1);
-      console.log('room deleted');
+    if(adminSocketId.includes(socket.id)){
+      socket.broadcast.to(Array.from(socket.rooms)[1]).emit('Adminleft');
+      let roomName = Array.from(socket.rooms)[1];
+      let index = rooms.indexOf(roomName);
+      if (index > -1) {
+        // console.log('rooms before delete',rooms);
+        rooms.splice(index, 1);
+        // console.log('room deleted, rooms after detele',rooms);
+      }
+
+      let adminIDIndex = adminSocketId.indexOf(socket.id);
+      if (adminIDIndex > -1) {
+        // console.log('adimn array before delete',adminSocketId);
+        adminSocketId.splice(adminIDIndex, 1);
+        // console.log('adimn array after delete',adminSocketId);
+      }
     }
-  })
+  });
 
 });

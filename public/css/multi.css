@@ -167,5 +167,6 @@ button:disabled{
     width: 0%;
     height: 30px;
     background-color: #4CAF50;
+    transition: width 150ms;
   }
 
