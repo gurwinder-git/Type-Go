@@ -14,7 +14,7 @@ var totalWords;
 var hack = document.getElementById('hack');
 
 document.getElementById('roomName').innerText = localStorage.getItem('roomNameOfJoinUser');
-document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${JSON.parse(localStorage.getItem('nickNameOfJoinUser'))}</h3>
+document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${JSON.parse(localStorage.getItem('nickNameOfJoinUser'))} (You)</h3>
 <div class="myProgress">
 <div class="myBar" id = "${JSON.parse(localStorage.getItem('nickNameOfJoinUser'))}"></div>
 </div>`;
@@ -216,7 +216,7 @@ socket.on('result',(myData)=>{
 //taking data of Admin user
 
 socket.on('okISendedMyDataToJoinedUser',(okISendedMyDataToJoinedUser,joinedUserId)=>{
-    document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${okISendedMyDataToJoinedUser.nickName}</h3>
+    document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${okISendedMyDataToJoinedUser.nickName} (Admin)</h3>
                                                     <div class="myProgress">
                                                         <div class="myBar ${okISendedMyDataToJoinedUser.nickName}" id = "${joinedUserId}"></div>
                                                     </div>`;
@@ -234,9 +234,10 @@ socket.on('newlyJoinedUser',(newlyJoinedUser, joinedUserId)=>{
     <div class="myBar" id = "${joinedUserId}"></div>
 </div>`;
 
-    socket.emit('brodcastMyDataToOnlyNewlyJoinedUser',{
+    socket.emit('sendMyDataToOnlyNewlyJoinedUser',{
         roomCode : JSON.parse(localStorage.getItem('roomNameOfJoinUser')),
         nickName : JSON.parse(localStorage.getItem('nickNameOfJoinUser')),
+        toUser: joinedUserId
     })
 })
 

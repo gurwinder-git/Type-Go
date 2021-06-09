@@ -19,7 +19,7 @@ var calculateWidthOfProgressBar;
 getNextQuote();
 
 document.getElementById('roomName').innerText = localStorage.getItem('roomName');
-document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${JSON.parse(localStorage.getItem('nickName'))}</h3>
+document.getElementById('inGame').innerHTML += `<h3 class = "topMargin" >${JSON.parse(localStorage.getItem('nickName'))} (you)</h3>
                                                     <div class="myProgress">
                                                     <div class="myBar" id = "${JSON.parse(localStorage.getItem('nickName'))}"></div>
                                                 </div>`;

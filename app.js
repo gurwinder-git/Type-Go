@@ -69,8 +69,11 @@ io.on('connection',(socket)=>{
       // console.log('room joined having id:',roomCode.roomCode);
 
       let joinedUserId = socket.id;
+      //for admin
       io.sockets.in(roomCode.roomCode).emit('joinedRoom',joinedUserId,roomCode);
+      //for joined user
       socket.broadcast.to(roomCode.roomCode).emit('newlyJoinedUser', roomCode, joinedUserId);
+      // socket.to(joinedUserId).emit('newlyJoinedUser', roomCode, joinedUserId);
     }
 
     else{
@@ -84,9 +87,10 @@ io.on('connection',(socket)=>{
     socket.broadcast.to(recived.idOfJoinedUser).emit('okISendedMyDataToJoinedUser',recived,createrId);
   })
 
-  socket.on('brodcastMyDataToOnlyNewlyJoinedUser',(dataFromJoinUser)=>{
+  socket.on('sendMyDataToOnlyNewlyJoinedUser',(dataFromJoinUser)=>{
     let joinedUserId = socket.id;
-    socket.broadcast.to(dataFromJoinUser.roomCode).emit('okISendMyDataToNewlyJoinedUser',dataFromJoinUser,joinedUserId);
+    socket.broadcast.to(dataFromJoinUser.toUser).emit('okISendMyDataToNewlyJoinedUser',dataFromJoinUser,joinedUserId);
+    // socket.to(joinedUserId).emit('okISendMyDataToNewlyJoinedUser',dataFromJoinUser,joinedUserId);
   })
 
   socket.on('startGame',(startCredentials)=>{
