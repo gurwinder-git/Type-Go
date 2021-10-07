@@ -1,2 +1,2 @@
-# Test here
+# Demo
 https://type-go-multiplayer.herokuapp.com/
